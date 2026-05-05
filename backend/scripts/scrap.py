@@ -3,6 +3,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import time
+from pathlib import Path
 
 
 BASE_URL = "https://comidadibuteco.com.br/butecos/"
@@ -126,15 +127,18 @@ def main():
         todos_os_butecos.extend(dados_cidade)
 
     df = pd.DataFrame(todos_os_butecos)
+    
+    backend_path = Path(__file__).parent.parent
+    csv_path = backend_path / "data" / "butecos_comida_di_buteco.csv"
 
     df.to_csv(
-        "butecos_comida_di_buteco.csv",
+        csv_path,
         index=False,
         encoding="utf-8-sig",
         sep=";"
     )
 
-    print("Arquivo CSV gerado com sucesso!")
+    print(f"Arquivo CSV gerado em {csv_path}")
     print(f"Total de registros: {len(df)}")
 
 
