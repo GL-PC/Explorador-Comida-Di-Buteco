@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Beagle Brigade";
+  src: url("./assets/fonts/BeagleBrigadeAU.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Beagle Brigade", Arial, sans-serif;
+  background: #fc802d;
+  background-attachment: fixed;
+}
