@@ -16,6 +16,144 @@ body,
 body {
   margin: 0;
   font-family: "Beagle Brigade", Arial, sans-serif;
-  background: #fc802d;
-  background-attachment: fixed;
+  background-color: #fef2e4;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  position: relative;
+}
+
+
+
+.floating-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.floating-item {
+  position: absolute;
+  opacity: 1;
+  filter: saturate(0.8);
+  user-select: none;
+  will-change: transform;
+  transform-origin: center;
+}
+
+/* Chope parado no canto superior esquerdo */
+.floating-chope {
+  width: clamp(120px, 12vw, 230px);
+  top: 6%;
+  left: 4%;
+  animation: float-pulse-rotate-1 8s ease-in-out infinite;
+}
+
+/* Torresmo parado no canto superior direito */
+.floating-torresmo {
+  width: clamp(150px, 15vw, 300px);
+  top: 18%;
+  right: 5%;
+  animation: float-pulse-rotate-2 10s ease-in-out infinite;
+}
+
+/* Caldo parado mais embaixo */
+.floating-caldo {
+  width: clamp(220px, 24vw, 480px);
+  bottom: 4%;
+  left: 6%;
+  opacity: 1;
+  animation: float-pulse-rotate-3 12s ease-in-out infinite;
+}
+
+/* Repetições decorativas */
+.floating-chope-2 {
+  width: clamp(100px, 10vw, 200px);
+  top: 62%;
+  right: 8%;
+  opacity: 1;
+  animation: float-pulse-rotate-4 9s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+.floating-torresmo-2 {
+  width: clamp(130px, 13vw, 260px);
+  top: 72%;
+  left: 28%;
+  opacity: 1;
+  animation: float-pulse-rotate-5 11s ease-in-out infinite;
+  animation-delay: -4s;
+}
+
+@keyframes float-pulse-rotate-1 {
+  0% {
+    transform: rotate(-8deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(4deg) scale(1.08);
+  }
+
+  100% {
+    transform: rotate(-8deg) scale(1);
+  }
+}
+
+@keyframes float-pulse-rotate-2 {
+  0% {
+    transform: rotate(8deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(-5deg) scale(1.06);
+  }
+
+  100% {
+    transform: rotate(8deg) scale(1);
+  }
+}
+
+@keyframes float-pulse-rotate-3 {
+  0% {
+    transform: rotate(-3deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(5deg) scale(1.05);
+  }
+
+  100% {
+    transform: rotate(-3deg) scale(1);
+  }
+}
+
+@keyframes float-pulse-rotate-4 {
+  0% {
+    transform: rotate(10deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(-3deg) scale(1.07);
+  }
+
+  100% {
+    transform: rotate(10deg) scale(1);
+  }
+}
+
+@keyframes float-pulse-rotate-5 {
+  0% {
+    transform: rotate(-10deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(6deg) scale(1.06);
+  }
+
+  100% {
+    transform: rotate(-10deg) scale(1);
+  }
 }
