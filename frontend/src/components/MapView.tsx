@@ -1,19 +1,17 @@
-// MAP COMPONENT
-
-import { MapContainer, TileLayer } from 'react-leaflet'
+import { MapContainer, TileLayer } from "react-leaflet";
 
 export default function MapView() {
-  const initCoord: [number, number] = [-19.916681, -43.934493]
+  const initCoord: [number, number] = [-19.916681, -43.934493];
 
   return (
-    <div className="w-full h-full overflow-hidden rounded-2xl flex">
+    <div className="flex h-full w-full overflow-hidden rounded-2xl">
       <MapContainer
-      worldCopyJump={true}
-      attributionControl={false}
+        worldCopyJump={true}
+        attributionControl={false}
         center={initCoord}
-        zoom={7}
+        zoom={5}
         scrollWheelZoom={true}
-        className="h-full w-full rounded-2x"
+        className="h-full w-full rounded-2xl"
       >
         <TileLayer
           attribution="© Gustavo and Pedro "
@@ -21,5 +19,5 @@ export default function MapView() {
         />
       </MapContainer>
     </div>
-  )
+  );
 }
