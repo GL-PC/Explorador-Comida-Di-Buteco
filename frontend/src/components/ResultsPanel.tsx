@@ -1,4 +1,4 @@
-import { ListOrdered, ChevronRight } from "lucide-react";
+import { ListOrdered, ChevronRight,ClipboardList } from "lucide-react";
 
 export type BarResult = {
   id: number;
@@ -8,6 +8,8 @@ export type BarResult = {
   distanciaKm: number;
   imagemPratoUrl: string;
   paginaUrl: string;
+  lat?: number;
+  lng?: number;
 };
 
 type ResultsPanelProps = {
@@ -24,7 +26,7 @@ export default function ResultsPanel({
       <div className="flex items-center justify-between border-b border-[#eee1d0] px-5 py-4">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-50 text-orange-500">
-            <ListOrdered size={20} strokeWidth={2.3} />
+            <ClipboardList size={20} strokeWidth={2.3} />
           </div>
 
           <h3 className="text-[18px] font-bold text-slate-900">Resultados</h3>
@@ -40,8 +42,20 @@ export default function ResultsPanel({
 
       <div className="min-h-0 flex-1 overflow-y-auto">
         {resultados.length === 0 ? (
-          <div className="flex h-full items-center justify-center px-6 text-center text-sm text-gray-500">
-            Nenhum resultado encontrado ainda.
+          <div className="flex h-full flex-col items-center justify-center gap-3 px-8 text-center font-sans">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-50 text-orange-500">
+              <ListOrdered size={28} strokeWidth={2.2} />
+            </div>
+
+            <div>
+              <p className="text-base font-bold text-slate-800">
+                Nenhum resultado ainda
+              </p>
+
+              <p className="mt-1 max-w-[280px] text-sm leading-relaxed text-gray-500">
+                Digite um endereço e um raio para encontrar os butecos próximos.
+              </p>
+            </div>
           </div>
         ) : (
           resultados.map((bar) => (

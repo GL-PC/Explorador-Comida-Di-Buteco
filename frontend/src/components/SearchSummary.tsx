@@ -3,17 +3,14 @@ import { MapPin, Radar, Store } from "lucide-react";
 type SearchSummaryProps = {
   enderecoBuscado?: string;
   raioBusca?: number;
+  quantidadeResultados?: number;
 };
 
 export default function SearchSummary({
   enderecoBuscado = "Nenhum endereço buscado",
   raioBusca = 5,
+  quantidadeResultados = 0,
 }: SearchSummaryProps) {
-  function getResultadosEncontrados() {
-    return 0;
-  }
-
-  const resultadosEncontrados = getResultadosEncontrados();
 
   return (
     <div className="flex w-full items-center justify-center">
@@ -50,7 +47,7 @@ export default function SearchSummary({
           <div className="flex min-w-0 flex-col font-sans">
             <span className="text-sm text-gray-500">Bares encontrados</span>
             <strong className="text-base text-black">
-              {resultadosEncontrados}
+              {quantidadeResultados}
             </strong>
           </div>
         </div>

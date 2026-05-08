@@ -8,15 +8,24 @@ type SearchFormProps = {
 
 export default function SearchForm({ onBuscar, onLimpar }: SearchFormProps) {
   const [endereco, setEndereco] = useState("");
-  const [alcance, setAlcance] = useState(0);
+  const [alcance, setAlcance] = useState("");
+  const [isValidRadious, setIsValidRadious] = useState(true);
 
   function handleBuscar() {
-    onBuscar(endereco, alcance);
+    const raioNumerico = Number(alcance);
+
+    if (!raioNumerico || raioNumerico <= 0) {
+      setIsValidRadious(false);
+      return;
+    }
+    setIsValidRadious(true);
+    onBuscar(endereco, raioNumerico);
   }
 
   function handleLimpar() {
     setEndereco("");
-    setAlcance(0);
+    setAlcance("");
+    setIsValidRadious(true);
     onLimpar();
   }
 
@@ -38,14 +47,21 @@ export default function SearchForm({ onBuscar, onLimpar }: SearchFormProps) {
           />
         </div>
 
-        <div className="w-full font-sans lg:w-36">
+        <div className="w-full font-sans lg:w-36 relative ">
           <input
             type="number"
+            min={0.01}
+            step={0.01}
             value={alcance || ""}
             placeholder="Raio (km)"
-            onChange={(event) => setAlcance(Number(event.target.value))}
+            onChange={(event) => setAlcance(event.target.value)}
             className="h-14 w-full rounded-xl border border-gray-200 px-4 text-base outline-none"
           />
+          {!isValidRadious && (
+            <div className="absolute left-[20px] top-[58px] z-20 whitespace-nowrap rounded-md bg-red-50 px-2 py-1 text-xs font-semibold text-red-500 shadow-sm">
+              Valor inválido!
+            </div>
+          )}
         </div>
 
         <div className="flex w-full flex-col gap-3 sm:flex-row lg:w-auto">

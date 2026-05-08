@@ -27,3 +27,25 @@ body {
 
 
 
+/* -------------------- POPUPS DOS MARKERS LEAFLET -------------------- */
+
+/* Caixa externa padrão do popup do Leaflet.
+   É o balão branco que abre quando clicamos no marker. */
+.leaflet-popup-content-wrapper {
+    border-radius: 14px !important;
+    padding: 0 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18) !important;
+}
+
+/* Área interna padrão do conteúdo do popup do Leaflet.
+   O Leaflet adiciona margem por padrão, então removemos para controlar tudo via .popup-card. */
+.leaflet-popup-content {
+    margin: 0 !important;
+    width: 230px !important;
+}
+
+/* Pontinha triangular do popup do Leaflet.
+   Mantemos branca para combinar com o card. */
+.leaflet-popup-tip {
+    background-color: #ffffff !important;
+}
