@@ -1,11 +1,6 @@
-"""
-Carrega o CSV geocodificado e constrói a estrutura de dados para o Flask.
-Importado pelo app.py na inicialização.
-"""
-
 import csv
 from pathlib import Path
-from backend.src import KDTree
+from src import KDTree
 
 
 DATA_DIR = Path(__file__).parent / "data"

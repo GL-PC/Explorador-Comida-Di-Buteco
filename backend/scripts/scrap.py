@@ -68,12 +68,18 @@ def extrair_butecos_da_pagina(html, cidade):
         endereco = endereco_tag.get_text(" ", strip=True) if endereco_tag else ""
         imagem = imagem_tag.get("src", "").strip() if imagem_tag else ""
 
+        link_tag = card.select_one("a[href*='comidadibuteco']")
+        if not link_tag:
+            link_tag = card.select_one("a[href]")
+        pagina_url = urljoin("https://comidadibuteco.com.br", link_tag["href"]) if link_tag and link_tag.get("href") else ""
+
         if nome:
             dados.append({
                 "cidade": cidade,
                 "nome_do_bar": nome,
                 "endereco": endereco,
-                "imagem_prato": imagem
+                "imagem_prato": imagem,
+                "pagina_url": pagina_url,
             })
 
     return dados
