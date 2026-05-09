@@ -31,11 +31,15 @@ def bar_to_dict(bar: dict) -> dict:
 def bar_to_frontend_dict(bar: dict, bar_id: int, distancia_km: float) -> dict:
     """Serializa um bar no formato esperado pelo frontend."""
     partes_rua = ", ".join(filter(None, [bar.get("rua", ""), bar.get("numero", "")]))
-    partes_cidade = " - ".join(filter(None, [bar.get("cidade", ""), bar.get("estado", "")]))
-    endereco = " - ".join(filter(None, [partes_rua, partes_cidade]))
+    endereco = " - ".join(filter(None, [partes_rua, bar.get("bairro", ""), bar.get("cidade", ""), bar.get("estado", "")]))
     return {
         "id": bar_id,
         "nome": bar.get("nome_do_bar", ""),
+        "rua": bar.get("rua", ""),
+        "numero": bar.get("numero", ""),
+        "bairro": bar.get("bairro", ""),
+        "cidade": bar.get("cidade", ""),
+        "estado": bar.get("estado", ""),
         "endereco": endereco,
         "distanciaKm": round(distancia_km, 2),
         "imagemPratoUrl": bar.get("imagem_prato", ""),
