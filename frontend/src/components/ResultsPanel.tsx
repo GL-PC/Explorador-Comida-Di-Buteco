@@ -4,7 +4,11 @@ export type BarResult = {
   id: number;
   nome: string;
   endereco: string;
-  bairro: string;
+  bairro?: string;
+  cidade?: string;
+  estado?: string;
+  rua?: string;
+  numero?: string;
   distanciaKm: number;
   imagemPratoUrl: string;
   paginaUrl: string;
@@ -14,12 +18,14 @@ export type BarResult = {
 
 type ResultsPanelProps = {
   resultados: BarResult[];
-  onVerNoMapa?: (bar: BarResult) => void;
+  onSelecionarBar?: (bar: BarResult) => void;
+  onAbrirPagina?: (bar: BarResult) => void;
 };
 
 export default function ResultsPanel({
   resultados,
-  onVerNoMapa,
+  onSelecionarBar,
+  onAbrirPagina,
 }: ResultsPanelProps) {
   return (
     <div className="flex h-full w-full flex-col overflow-hidden rounded-[13px] bg-white font-sans shadow-sm">
@@ -61,7 +67,7 @@ export default function ResultsPanel({
           resultados.map((bar) => (
             <div
               key={bar.id}
-              onClick={() => onVerNoMapa?.(bar)}
+              onClick={() => onSelecionarBar?.(bar)}
               className="cursor-pointer border-b border-[#f2e6d8] px-4 py-4 transition hover:bg-orange-50/60 sm:grid sm:grid-cols-[120px_1fr_110px_44px] sm:items-center"
             >
               <div className="mb-3 flex justify-center sm:mb-0">
@@ -95,7 +101,7 @@ export default function ResultsPanel({
                   type="button"
                   onClick={(event) => {
                     event.stopPropagation();
-                    onVerNoMapa?.(bar);
+                    onAbrirPagina?.(bar);
                   }}
                   className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-slate-500 transition hover:bg-orange-100 hover:text-orange-500"
                   title="Ver mais detalhes"

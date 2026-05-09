@@ -22,39 +22,28 @@ type Coordenadas = {
 };
 
 function montarEnderecoBar(bar: ButecoMapaApi) {
-  const partes = [
-    bar.rua,
-    bar.numero,
-    bar.bairro,
-    bar.cidade,
-    bar.estado,
-  ].filter(Boolean);
+  const ruaNumero = [bar.rua, bar.numero].filter(Boolean).join(", ");
+  const cidadeEstado = [bar.cidade, bar.estado].filter(Boolean).join(" - ");
 
-  return partes.join(", ");
+  return [ruaNumero, bar.bairro, cidadeEstado].filter(Boolean).join(" - ");
 }
 
 function converterButecosParaMarkers(butecos: ButecoMapaApi[]): MapMarkerBar[] {
   return butecos
     .filter((bar) => bar.lat !== null && bar.lng !== null)
-    .map((bar, index) => {
-      const marker: MapMarkerBar = {
-        id: `${bar.nome_do_bar}-${index}`,
-        nome: bar.nome_do_bar,
-        endereco: montarEnderecoBar(bar),
-        bairro: bar.bairro,
-        cidade: bar.cidade,
-        lat: bar.lat as number,
-        lng: bar.lng as number,
-        imagemPratoUrl: bar.imagem_prato,
-      };
-
-      if (marker.nome.toLowerCase().includes("gisa")) {
-        console.log("Objeto original da API:", bar);
-        console.log("Marker convertido:", marker);
-      }
-
-      return marker;
-    });
+    .map((bar, index) => ({
+      id: `${bar.nome_do_bar}-${index}`,
+      nome: bar.nome_do_bar,
+      endereco: montarEnderecoBar(bar),
+      rua: bar.rua,
+      numero: bar.numero,
+      bairro: bar.bairro,
+      cidade: bar.cidade,
+      estado: bar.estado,
+      lat: bar.lat as number,
+      lng: bar.lng as number,
+      imagemPratoUrl: bar.imagem_prato,
+    }));
 }
 
 function converterResultadosParaMarkers(
@@ -66,7 +55,11 @@ function converterResultadosParaMarkers(
       id: bar.id,
       nome: bar.nome,
       endereco: bar.endereco,
+      rua: bar.rua,
+      numero: bar.numero,
       bairro: bar.bairro,
+      cidade: bar.cidade,
+      estado: bar.estado,
       lat: bar.lat as number,
       lng: bar.lng as number,
       imagemPratoUrl: bar.imagemPratoUrl,
@@ -76,6 +69,7 @@ function converterResultadosParaMarkers(
 function App() {
   const [todosMarkers, setTodosMarkers] = useState<MapMarkerBar[]>([]);
   const [mapMarkers, setMapMarkers] = useState<MapMarkerBar[]>([]);
+  const [barSelecionado, setBarSelecionado] = useState<BarResult | null>(null);
 
   const [enderecoBuscado, setEnderecoBuscado] = useState("");
   const [raioBusca, setRaioBusca] = useState(0);
@@ -116,6 +110,7 @@ function App() {
 
       const markersBusca = converterResultadosParaMarkers(resultadosApi);
       setMapMarkers(markersBusca);
+      setBarSelecionado(null);
     } catch (error) {
       console.error(error);
 
@@ -138,6 +133,7 @@ function App() {
     setRaioBusca(0);
     setResultados([]);
     setCoordenadasBusca(null);
+    setBarSelecionado(null);
     setErroBusca("");
 
     setMapMarkers(todosMarkers);
@@ -213,6 +209,7 @@ function App() {
             markers={mapMarkers} 
             coordenadasBusca={coordenadasBusca}
             raioBuscaKm={raioBusca}
+            barSelecionado={barSelecionado}
             />
           </div>
         </div>
@@ -225,7 +222,8 @@ function App() {
           ) : (
             <ResultsPanel
               resultados={resultados}
-              onVerNoMapa={abrirPaginaDoBar}
+              onSelecionarBar={setBarSelecionado}
+              onAbrirPagina={abrirPaginaDoBar}
             />
           )}
         </div>
